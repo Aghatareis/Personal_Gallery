@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">Personal Gallery</string>
+    <string name="fotografia_1">Sempre e para todo sempre.</string>
+    <string name="data_1">Data 13/10/2022</string>
+    <string name="fotografia_2">Com Meu Princípe.</string>
+    <string name="data_2">09/04/2023</string>
+    <string name="fotografia_3">Jogo do Brasil com meus amigos.</string>
+    <string name="data_3">28/11/2022</string>
+    <string name="fotografia_4">Com minha mais que amiga, best.</string>
+    <string name="data_4">01/06/2023</string>
+    <string name="fotografia_5">Lendo livros, com o Nicollas me atrapalhando.</string>
+    <string name="data_5">09/03/2022</string>
+    <string name="fotografia_6">Eu e o meu amigo idiota Pedro.</string>
+    <string name="data_6">24/11/2023</string>
+    <string name="fotografia_7">Eu e minha amiga maysa tomando um sol.</string>
+    <string name="data_7">05/06/2023</string>
 </resources>
