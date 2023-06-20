@@ -7,15 +7,20 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -23,6 +28,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.personalgallery.data.FonteDados
+import com.example.personalgallery.model.ImageDescricaoId
 import com.example.personalgallery.ui.theme.PersonalGalleryTheme
 
 class MainActivity : ComponentActivity() {
@@ -34,40 +41,59 @@ class MainActivity : ComponentActivity() {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
-                ){}
+                ){
+                    AppGallery()
+                }
             }
         }
     }
 }
 
 @Composable
-fun GaleriaMoldura(
-    IdImagem: Int,
-    IdTexto_1: Int,
-    IdTexto_2: Int
-) {
-    Card {
+fun AppGallery()
+{
+    LazyColumn()
+    {
+        items(FonteDados().CarregaListDados()){
+            galeriaMoldura -> GaleriaMoldura(galeriaMoldura)
+        }
+    }
+}
+
+
+@Composable
+fun GaleriaMoldura(ImageDescricaoId:ImageDescricaoId) {
+    Card (
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(10.dp),
+        colors = CardDefaults.cardColors(Color(123 ,104, 238)),
+        elevation = CardDefaults.cardElevation(5.dp)
+            ){
         Column(
             verticalArrangement = Arrangement.Top,
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier.fillMaxWidth()
         ) {
+
             Image(
-                painter = painterResource(id = IdImagem),
+                painter = painterResource(id = ImageDescricaoId.idFotografia),
                 contentDescription = null,
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
                     .size(300.dp)
+                    .padding(10.dp)
             )
 
             Text(
-                text = stringResource(id = IdTexto_1),
-                fontSize = 25.sp,
+                text = stringResource(id = ImageDescricaoId.idTexto_1),
+                fontSize = 20.sp,
                 modifier = Modifier
                     .padding(3.dp)
             )
 
             Text(
-                text = stringResource(id = IdTexto_2),
+                text = stringResource(id = ImageDescricaoId.idTexto_2),
                 fontSize = 15.sp,
                 fontWeight = FontWeight.Bold
             )
@@ -81,15 +107,7 @@ fun PreviewMoldura() {
     PersonalGalleryTheme {
         Column {
             GaleriaMoldura(
-                IdImagem = R.drawable.imagem_1,
-                IdTexto_1 = R.string.fotografia_1,
-                IdTexto_2 = R.string.data_1
-            )
-
-            GaleriaMoldura(
-                IdImagem = R.drawable.imagem_2,
-                IdTexto_1 = R.string.fotografia_2,
-                IdTexto_2 = R.string.data_2
+                ImageDescricaoId(R.drawable.foto_8, R.string.fotografia_8, R.string.data_8)
             )
         }
     }
