@@ -3,7 +3,11 @@ package com.example.personalgallery
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.spring
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -18,6 +22,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -62,7 +70,10 @@ fun AppGallery()
 
 
 @Composable
-fun GaleriaMoldura(ImageDescricaoId:ImageDescricaoId) {
+fun GaleriaMoldura(ImageDescricaoId:ImageDescricaoId)
+{
+    var expandir by remember { mutableStateOf(false) }
+
     Card (
         modifier = Modifier
             .fillMaxWidth()
@@ -73,7 +84,14 @@ fun GaleriaMoldura(ImageDescricaoId:ImageDescricaoId) {
         Column(
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
+                .animateContentSize(
+                    animationSpec = spring(
+                        dampingRatio = Spring.DampingRatioLowBouncy,
+                        stiffness = Spring.StiffnessMedium
+                    )
+                )
         ) {
 
             Image(
@@ -83,6 +101,9 @@ fun GaleriaMoldura(ImageDescricaoId:ImageDescricaoId) {
                 modifier = Modifier
                     .size(300.dp)
                     .padding(10.dp)
+                    .clickable {
+                        expandir = !expandir
+                    }
             )
 
             Text(
@@ -91,12 +112,13 @@ fun GaleriaMoldura(ImageDescricaoId:ImageDescricaoId) {
                 modifier = Modifier
                     .padding(3.dp)
             )
-
-            Text(
-                text = stringResource(id = ImageDescricaoId.idTexto_2),
-                fontSize = 15.sp,
-                fontWeight = FontWeight.Bold
-            )
+            if (expandir==true){
+                Text(
+                    text = stringResource(id = ImageDescricaoId.idTexto_2),
+                    fontSize = 15.sp,
+                    fontWeight = FontWeight.Bold
+                )
+            }
         }
     }
 }
